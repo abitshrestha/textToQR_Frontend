@@ -7,6 +7,7 @@ const UserField=()=>{
     const [error,setError]=useState('');
     const [value,setValue]=useState('');
     const [uniqueID,setUniqueID]=useState('');
+    const [isLoading,setIsLoading]=useState(false);
     const handleClick=async(e)=>{
         e.preventDefault();
         if(value.trim()===''){
@@ -14,7 +15,7 @@ const UserField=()=>{
         }
         else{
             setError('');
-            const response=await fetch('https://texttoqr-backend.onrender.com/generateQR',{
+            const response=await fetch('http://localhost:2000/generateQR',{
                 method:'post',
                 body:JSON.stringify({
                     userText:value
@@ -24,9 +25,11 @@ const UserField=()=>{
                 }
             });
             if(response.ok){
+                setIsLoading(true);
                 const data=await response.json();
                 setUniqueID(data.uniqueID);
                 const qrCodeUrl = `/qrImage/${data.uniqueID}`;
+                setIsLoading(false);
                 navigate(qrCodeUrl);
             }
         
@@ -46,6 +49,7 @@ const UserField=()=>{
             <h1>Convert your text to QR code</h1>
             <input type="text" onChange={handleChange} value={value} name='userText' placeholder="enter your text to convert to QR...."/>
             <p className='error'>{error?error:''}</p>
+            {isLoading?<div><p>Loading...</p><br/><p>This may take a while...</p></div>:""}
             <button onClick={handleClick} className="userButton" type="button">Generate</button>
         </div>
     )
