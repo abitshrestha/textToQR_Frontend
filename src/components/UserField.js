@@ -15,7 +15,7 @@ const UserField=()=>{
         }
         else{
             setError('');
-            const response=await fetch('https://dashboard.render.com/web/srv-cjqqv4the99c73f9461g/generateQR',{
+            const response=await fetch('https://texttoqr-backend.onrender.com/generateQR',{
                 method:'post',
                 body:JSON.stringify({
                     userText:value
