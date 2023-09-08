@@ -16,7 +16,7 @@ const UserField = () => {
       setError('');
       setIsLoading(true); // Set isLoading to true while fetching data
       try {
-        const response = await fetch('http://localhost:2000/generateQR', {
+        const response = await fetch('https://texttoqr-backend.onrender.com/generateQR', {
           method: 'post',
           body: JSON.stringify({
             userText: value,
